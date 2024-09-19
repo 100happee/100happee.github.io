@@ -1,0 +1,16 @@
+using UnityEngine;
+
+public class PowerUp : MonoBehaviour
+{
+    public enum PowerUpType { SpeedBoost, DoubleJump, Invincibility }
+    public PowerUpType type;
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            // Activate power-up effect based on type
+            Destroy(gameObject);
+        }
+    }
+}
