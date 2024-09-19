@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Platformer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #87CEEB; /* Sky blue */
+        }
+
+        .game-container {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            overflow: hidden;
+            background-color: #4CAF50; /* Green ground */
+            border: 2px solid #000;
+        }
+
+        .player {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #FF0000; /* Red player */
+            bottom: 50px;
+            left: 50px;
+        }
+
+        .platform {
+            position: absolute;
+            background-color: #8B4513; /* Brown platform */
+        }
+
+        #platform1 {
+            width: 150px;
+            height: 20px;
+            bottom: 100px;
+            left: 50px;
+        }
+
+        #platform2 {
+            width: 200px;
+            height: 20px;
+            bottom: 200px;
+            left: 300px;
+        }
+
+        #platform3 {
+            width: 100px;
+            height: 20px;
+            bottom: 300px;
+            left: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="player" id="player"></div>
+        <div class="platform" id="platform1"></div>
+        <div class="platform" id="platform2"></div>
+        <div class="platform" id="platform3"></div>
+    </div>
+
+    <script>
+        const player = document.getElementById("player");
+        let isJumping = false;
+        let gravity = 0.5;
+        let velocityY = 0;
+        const gameContainer = document.querySelector(".game-container");
+
+        document.addEventListener("keydown", (event) => {
+            if (event.code === "ArrowRight") {
+                player.style.left = `${player.offsetLeft + 10}px`;
+            }
+            if (event.code === "ArrowLeft") {
+                player.style.left = `${player.offsetLeft - 10}px`;
+            }
+            if (event.code === "Space" && !isJumping) {
+                isJumping = true;
+                velocityY = -10; // Jump strength
+            }
+        });
+
+        function gameLoop() {
+            if (isJumping) {
+                velocityY += gravity;
+                player.style.bottom = `${parseInt(player.style.bottom) + velocityY}px`;
+
+                // Check if player lands on a platform
+                if (parseInt(player.style.bottom) <= 50) {
+                    isJumping = false;
+                    player.style.bottom = "50px"; // Reset position
+                }
+
+                // Collision with platforms
+                const platforms = document.querySelectorAll(".platform");
+                platforms.forEach(platform => {
+                    if (parseInt(player.style.bottom) <= parseInt(platform.style.bottom) + 20 &&
+                        parseInt(player.style.bottom) >= parseInt(platform.style.bottom) &&
+                        player.offsetLeft + 30 > platform.offsetLeft &&
+                        player.offsetLeft < platform.offsetLeft + platform.offsetWidth) {
+                        isJumping = false;
+                        player.style.bottom = `${parseInt(platform.style.bottom) + 30}px`;
+                    }
+                });
+            }
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+</html>
