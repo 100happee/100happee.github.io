@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epic Clicker Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+        }
+        #click-button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        #point-display {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .upgrades, .challenges {
+            margin-top: 30px;
+        }
+        .upgrade, .challenge {
+            margin-bottom: 10px;
+        }
+        .upgrade button, .challenge button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        #high-score {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Epic Clicker Game</h1>
+        <div id="point-display">Points: 0</div>
+        <button id="click-button">Click Me!</button>
+        
+        <div class="upgrades">
+            <h2>Upgrades</h2>
+            <div class="upgrade" id="upgrade-1">
+                <span>Upgrade 1 (+1 point per click, Cost: <span id="upgrade-1-cost">10</span> points, Owned: <span id="upgrade-1-owned">0</span>)</span>
+                <button id="upgrade-1-btn" onclick="buyUpgrade(1)">Buy</button>
+            </div>
+            <div class="upgrade" id="upgrade-2">
+                <span>Upgrade 2 (+5 points per click, Cost: <span id="upgrade-2-cost">50</span> points, Owned: <span id="upgrade-2-owned">0</span>)</span>
+                <button id="upgrade-2-btn" onclick="buyUpgrade(2)">Buy</button>
+            </div>
+            <div class="upgrade" id="upgrade-3">
+                <span>Upgrade 3 (+1 point per millisecond, Cost: <span id="upgrade-3-cost">100</span> points, Owned: <span id="upgrade-3-owned">0</span>)</span>
+                <button id="upgrade-3-btn" onclick="buyUpgrade(3)">Buy</button>
+            </div>
+        </div>
+
+        <div class="challenges">
+            <h2>Challenges</h2>
+            <div class="challenge" id="challenge-container"></div>
+        </div>
+
+        <div id="high-score">High Score: 0</div>
+    </div>
+
+    <script>
+        let points = 0;
+        let pointsPerClick = 1;
+        let pointsPerMs = 0;
+        let highScore = 0;
+        let activeChallenges = [];
+
+        const upgrades = {
+            1: { baseCost: 10, cost: 10, multiplier: 1.5, pointsPerUpgrade: 1, owned: 0 },
+            2: { baseCost: 50, cost: 50, multiplier: 1.7, pointsPerUpgrade: 5, owned: 0 },
+            3: { baseCost: 100, cost: 100, multiplier: 2.0, pointsPerUpgrade: 0, passivePointsPerMs: 1, owned: 0 },
+        };
+
+        document.getElementById("click-button").addEventListener("click", function() {
+            points += pointsPerClick;
+            updatePointsDisplay();
+            checkChallenges();
+            updateHighScore();
+        });
+
+        function updatePointsDisplay() {
+            document.getElementById("point-display").innerText = `Points: ${Math.round(points)}`;
+        }
+
+        function buyUpgrade(upgradeNumber) {
+            const upgrade = upgrades[upgradeNumber];
+            if (points >= upgrade.cost) {
+                points -= upgrade.cost;
+                upgrade.owned += 1;
+                upgrade.cost = Math.floor(upgrade.cost * upgrade.multiplier);
+
+                if (upgradeNumber === 1 || upgradeNumber === 2) {
+                    pointsPerClick += upgrade.pointsPerUpgrade;
+                } else if (upgradeNumber === 3) {
+                    pointsPerMs += upgrade.passivePointsPerMs;
+                }
+
+                updateUpgradeDisplay(upgradeNumber);
+                updatePointsDisplay();
+            }
+        }
+
+        function updateUpgradeDisplay(upgradeNumber) {
+            const upgrade = upgrades[upgradeNumber];
+            document.getElementById(`upgrade-${upgradeNumber}-cost`).innerText = Math.round(upgrade.cost);
+            document.getElementById(`upgrade-${upgradeNumber}-owned`).innerText = upgrade.owned;
+        }
+
+        setInterval(() => {
+            points += pointsPerMs;
+            updatePointsDisplay();
+            checkChallenges();
+        }, 100);
+
+        function generateRandomChallenge() {
+            const challenge = document.createElement('div');
+            challenge.classList.add('challenge');
+            challenge.setAttribute('id', 'challenge-' + challengeId);
+
+            const type = Math.random();
+            let requirement = 0;
+            let reward = "";
+
+            // Ensure uniqueness of challenges by avoiding duplicates
+            let task;
+            do {
+                task = Math.floor(Math.random() * 2); // Random task generation
+            } while (activeChallenges.includes(task));
+
+            activeChallenges.push(task);
+
+            if (type < 0.5) {
+                requirement = Math.round(Math.floor(points * 2.5 + 100)); // Longer task
+                const ppcReward = Math.max(1, Math.floor(pointsPerClick * 5)); // Lower reward
+                reward = `Reach ${requirement} points (Reward: +${ppcReward} PPC)`;
+                challenge.innerHTML = `<span>${reward}</span> <button onclick="completeChallenge(${challengeId}, 'points', ${requirement})">Claim Reward</button>`;
+            } else {
+                const upgradeNum = 3; // Only keeping Upgrade 3 challenge
+                requirement = upgrades[upgradeNum].owned + 5; // Longer task
+                const ppmReward = Math.max(1, Math.floor(pointsPerMs * 1.5)); // Lower reward
+                reward = `Upgrade 3 to ${requirement} times (Reward: +${ppmReward} PPM)`;
+                challenge.innerHTML = `<span>${reward}</span> <button onclick="completeChallenge(${challengeId}, 'upgrade', ${upgradeNum}, ${requirement})">Claim Reward</button>`;
+            }
+
+            document.getElementById('challenge-container').appendChild(challenge);
+            challengeId++;
+        }
+
+        function checkChallenges() {
+            if (Math.random() < 0.005) { // Lower chance for challenges
+                generateRandomChallenge();
+            }
+        }
+
+        function completeChallenge(id, type, requirement, upgradeNum = null) {
+            if (type === 'points' && points >= requirement) {
+                pointsPerClick += Math.max(1, Math.floor(pointsPerClick * 5)); // Lower reward
+            } else if (type === 'upgrade' && upgradeNum === 3 && upgrades[upgradeNum].owned >= requirement) {
+                pointsPerMs += 1.5; // Lower reward
+            }
+
+            // Remove only the specific challenge that was completed
+            document.getElementById(`challenge-${id}`).remove();
+            activeChallenges = activeChallenges.filter(task => task !== id); // Remove from active challenges
+        }
+
+        function updateHighScore() {
+            if (points > highScore) {
+                highScore = points;
+                document.getElementById('high-score').innerText = `High Score: ${Math.round(highScore)}`;
+
+                // Simulate sending to server (you'd implement real server logic here)
+                // sendHighScoreToServer(highScore);
+            }
+        }
+
+        // Simulate server-side high score update
+        function sendHighScoreToServer(score) {
+            // You can implement server-side logic with a database here
+            console.log("High score sent to server:", score);
+        }
+    </script>
+</body>
+</html>
