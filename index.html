@@ -45,10 +45,6 @@
             font-size: 14px;
             cursor: pointer;
         }
-        #high-score {
-            margin-top: 20px;
-            font-size: 20px;
-        }
     </style>
 </head>
 <body>
@@ -77,15 +73,13 @@
             <h2>Challenges</h2>
             <div class="challenge" id="challenge-container"></div>
         </div>
-
-        <div id="high-score">High Score: 0</div>
     </div>
 
     <script>
         let points = 0;
         let pointsPerClick = 1;
         let pointsPerMs = 0;
-        let highScore = 0;
+        let challengeId = 0;
         let activeChallenges = [];
 
         const upgrades = {
@@ -98,7 +92,6 @@
             points += pointsPerClick;
             updatePointsDisplay();
             checkChallenges();
-            updateHighScore();
         });
 
         function updatePointsDisplay() {
@@ -153,7 +146,7 @@
             activeChallenges.push(task);
 
             if (type < 0.5) {
-                requirement = Math.round(Math.floor(points * 2.5 + 100)); // Longer task
+                requirement = Math.round(points * 2.5 + 100); // Longer task
                 const ppcReward = Math.max(1, Math.floor(pointsPerClick * 5)); // Lower reward
                 reward = `Reach ${requirement} points (Reward: +${ppcReward} PPC)`;
                 challenge.innerHTML = `<span>${reward}</span> <button onclick="completeChallenge(${challengeId}, 'points', ${requirement})">Claim Reward</button>`;
@@ -170,7 +163,7 @@
         }
 
         function checkChallenges() {
-            if (Math.random() < 0.005) { // Lower chance for challenges
+            if (document.getElementById('challenge-container').children.length < 3 && Math.random() < 0.01) {
                 generateRandomChallenge();
             }
         }
@@ -185,22 +178,6 @@
             // Remove only the specific challenge that was completed
             document.getElementById(`challenge-${id}`).remove();
             activeChallenges = activeChallenges.filter(task => task !== id); // Remove from active challenges
-        }
-
-        function updateHighScore() {
-            if (points > highScore) {
-                highScore = points;
-                document.getElementById('high-score').innerText = `High Score: ${Math.round(highScore)}`;
-
-                // Simulate sending to server (you'd implement real server logic here)
-                // sendHighScoreToServer(highScore);
-            }
-        }
-
-        // Simulate server-side high score update
-        function sendHighScoreToServer(score) {
-            // You can implement server-side logic with a database here
-            console.log("High score sent to server:", score);
         }
     </script>
 </body>
