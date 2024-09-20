@@ -45,26 +45,32 @@
             font-size: 14px;
             cursor: pointer;
         }
+        #ppc-display, #ppm-display {
+            font-size: 18px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Epic Clicker Game</h1>
         <div id="point-display">Points: 0</div>
+        <div id="ppc-display">Points Per Click (PPC): 1</div>
+        <div id="ppm-display">Points Per Millisecond (PPM): 0</div>
         <button id="click-button">Click Me!</button>
         
         <div class="upgrades">
             <h2>Upgrades</h2>
             <div class="upgrade" id="upgrade-1">
-                <span>Upgrade 1 (+1 point per click, Cost: <span id="upgrade-1-cost">10</span> points, Owned: <span id="upgrade-1-owned">0</span>)</span>
+                <span>Upgrade 1 (+1 point per click, Cost: <span id="upgrade-1-cost">10</span> points)</span>
                 <button id="upgrade-1-btn" onclick="buyUpgrade(1)">Buy</button>
             </div>
             <div class="upgrade" id="upgrade-2">
-                <span>Upgrade 2 (+5 points per click, Cost: <span id="upgrade-2-cost">50</span> points, Owned: <span id="upgrade-2-owned">0</span>)</span>
+                <span>Upgrade 2 (+5 points per click, Cost: <span id="upgrade-2-cost">50</span> points)</span>
                 <button id="upgrade-2-btn" onclick="buyUpgrade(2)">Buy</button>
             </div>
             <div class="upgrade" id="upgrade-3">
-                <span>Upgrade 3 (+1 point per millisecond, Cost: <span id="upgrade-3-cost">100</span> points, Owned: <span id="upgrade-3-owned">0</span>)</span>
+                <span>Upgrade 3 (+1 point per millisecond, Cost: <span id="upgrade-3-cost">100</span> points)</span>
                 <button id="upgrade-3-btn" onclick="buyUpgrade(3)">Buy</button>
             </div>
         </div>
@@ -83,9 +89,9 @@
         let activeChallenges = [];
 
         const upgrades = {
-            1: { baseCost: 10, cost: 10, multiplier: 1.5, pointsPerUpgrade: 1, owned: 0 },
-            2: { baseCost: 50, cost: 50, multiplier: 1.7, pointsPerUpgrade: 5, owned: 0 },
-            3: { baseCost: 100, cost: 100, multiplier: 2.0, pointsPerUpgrade: 0, passivePointsPerMs: 1, owned: 0 },
+            1: { baseCost: 10, cost: 10, multiplier: 1.5, pointsPerUpgrade: 1 },
+            2: { baseCost: 50, cost: 50, multiplier: 1.7, pointsPerUpgrade: 5 },
+            3: { baseCost: 100, cost: 100, multiplier: 2.0, pointsPerUpgrade: 0, passivePointsPerMs: 1 },
         };
 
         document.getElementById("click-button").addEventListener("click", function() {
@@ -96,13 +102,14 @@
 
         function updatePointsDisplay() {
             document.getElementById("point-display").innerText = `Points: ${Math.round(points)}`;
+            document.getElementById("ppc-display").innerText = `Points Per Click (PPC): ${Math.round(pointsPerClick)}`;
+            document.getElementById("ppm-display").innerText = `Points Per Millisecond (PPM): ${Math.round(pointsPerMs)}`;
         }
 
         function buyUpgrade(upgradeNumber) {
             const upgrade = upgrades[upgradeNumber];
             if (points >= upgrade.cost) {
                 points -= upgrade.cost;
-                upgrade.owned += 1;
                 upgrade.cost = Math.floor(upgrade.cost * upgrade.multiplier);
 
                 if (upgradeNumber === 1 || upgradeNumber === 2) {
@@ -119,7 +126,6 @@
         function updateUpgradeDisplay(upgradeNumber) {
             const upgrade = upgrades[upgradeNumber];
             document.getElementById(`upgrade-${upgradeNumber}-cost`).innerText = Math.round(upgrade.cost);
-            document.getElementById(`upgrade-${upgradeNumber}-owned`).innerText = upgrade.owned;
         }
 
         setInterval(() => {
@@ -152,7 +158,7 @@
                 challenge.innerHTML = `<span>${reward}</span> <button onclick="completeChallenge(${challengeId}, 'points', ${requirement})">Claim Reward</button>`;
             } else {
                 const upgradeNum = 3; // Only keeping Upgrade 3 challenge
-                requirement = upgrades[upgradeNum].owned + 5; // Longer task
+                requirement = upgrades[upgradeNum].baseCost + 5; // Longer task
                 const ppmReward = Math.max(1, Math.floor(pointsPerMs * 1.5)); // Lower reward
                 reward = `Upgrade 3 to ${requirement} times (Reward: +${ppmReward} PPM)`;
                 challenge.innerHTML = `<span>${reward}</span> <button onclick="completeChallenge(${challengeId}, 'upgrade', ${upgradeNum}, ${requirement})">Claim Reward</button>`;
@@ -171,7 +177,7 @@
         function completeChallenge(id, type, requirement, upgradeNum = null) {
             if (type === 'points' && points >= requirement) {
                 pointsPerClick += Math.max(1, Math.floor(pointsPerClick * 5)); // Lower reward
-            } else if (type === 'upgrade' && upgradeNum === 3 && upgrades[upgradeNum].owned >= requirement) {
+            } else if (type === 'upgrade' && upgradeNum === 3 && upgrades[upgradeNum].baseCost >= requirement) {
                 pointsPerMs += 1.5; // Lower reward
             }
 
