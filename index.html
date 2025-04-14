@@ -1,190 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epic Clicker Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 800px;
-        }
-        #click-button {
-            font-size: 20px;
-            padding: 10px 20px;
-            margin-top: 20px;
-            cursor: pointer;
-        }
-        #point-display {
-            font-size: 24px;
-            margin: 20px 0;
-        }
-        .upgrades, .challenges {
-            margin-top: 30px;
-        }
-        .upgrade, .challenge {
-            margin-bottom: 10px;
-        }
-        .upgrade button, .challenge button {
-            margin-left: 10px;
-            padding: 5px 10px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        #ppc-display, #ppm-display {
-            font-size: 18px;
-            margin-top: 10px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>100happee Links</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Epic Clicker Game</h1>
-        <div id="point-display">Points: 0</div>
-        <div id="ppc-display">Points Per Click (PPC): 1</div>
-        <div id="ppm-display">Points Per Millisecond (PPM): 0</div>
-        <button id="click-button">Click Me!</button>
-        
-        <div class="upgrades">
-            <h2>Upgrades</h2>
-            <div class="upgrade" id="upgrade-1">
-                <span>Upgrade 1 (+1 point per click, Cost: <span id="upgrade-1-cost">10</span> points)</span>
-                <button id="upgrade-1-btn" onclick="buyUpgrade(1)">Buy</button>
-            </div>
-            <div class="upgrade" id="upgrade-2">
-                <span>Upgrade 2 (+5 points per click, Cost: <span id="upgrade-2-cost">50</span> points)</span>
-                <button id="upgrade-2-btn" onclick="buyUpgrade(2)">Buy</button>
-            </div>
-            <div class="upgrade" id="upgrade-3">
-                <span>Upgrade 3 (+1 point per millisecond, Cost: <span id="upgrade-3-cost">100</span> points)</span>
-                <button id="upgrade-3-btn" onclick="buyUpgrade(3)">Buy</button>
-            </div>
-        </div>
+<body class="bg-[#121212] text-white">
+  <!-- Banner -->
+  <div class="w-full">
+    <img src="https://img.itch.zone/aW1nLzk4OTc5MzAuanBn/original/waSzVW.jpg" alt="Banner" class="w-full h-48 object-cover">
+  </div>
 
-        <div class="challenges">
-            <h2>Challenges</h2>
-            <div class="challenge" id="challenge-container"></div>
-        </div>
+  <div class="min-h-screen flex flex-col items-center p-4 space-y-6">
+
+    <h1 class="text-4xl font-bold mt-4 text-center">100happee's Links</h1>
+
+    <!-- Main Links -->
+    <div class="flex flex-col items-start space-y-3 mt-4">
+      <a href="https://discord.gg/vng6UfQf2Y" class="flex items-center space-x-2 text-blue-400 hover:underline text-lg">
+        <img src="https://images-eds-ssl.xboxlive.com/image?url=4rt9.lXDC4H_93laV1_eHHFT949fUipzkiFOBH3fAiZZUCdYojwUyX2aTonS1aIwMrx6NUIsHfUHSLzjGJFxxsG72wAo9EWJR4yQWyJJaDb6rYcBtJvTvH3UoAS4JFNDaxGhmKNaMwgElLURlRFeVkLCjkfnXmWtINWZIrPGYq0-&format=source" alt="Discord" class="w-6 h-6"> 
+        <span>Join my Discord</span>
+      </a>
+
+      <a href="https://www.youtube.com/@100happee" class="flex items-center space-x-2 text-red-400 hover:underline text-lg">
+        <img src="https://yt3.googleusercontent.com/LZeUOuOM8lzINkYAKi1X3pCQz1xsSD_EndPUR1vOGesaGavUtyM_-bCUq7Gld-LPX_R7uieWsA=s900-c-k-c0x00ffffff-no-rj" alt="YouTube" class="w-6 h-6"> 
+        <span>Main YouTube Channel</span>
+      </a>
+
+      <a href="https://www.youtube.com/@HappeeMusic" class="flex items-center space-x-2 text-purple-400 hover:underline text-lg">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFs0jdJeDve2yi_cOxXYe3KHRdevFosaho_g&s" alt="Music" class="w-6 h-6"> 
+        <span>Music YouTube Channel</span>
+      </a>
+
+      <a href="https://soundcloud.com/bennett-jimison-547940898" class="flex items-center space-x-2 text-orange-400 hover:underline text-lg">
+        <img src="https://images.icon-icons.com/1907/PNG/512/iconfinder-soundcloud-4555867_121366.png" alt="SoundCloud" class="w-6 h-6"> 
+        <span>SoundCloud</span>
+      </a>
+
+      <a href="https://scratch.mit.edu/users/100happee" class="flex items-center space-x-2 text-yellow-400 hover:underline text-lg">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFs0jdJeDve2yi_cOxXYe3KHRdevFosaho_g&s" alt="Scratch" class="w-6 h-6"> 
+        <span>Scratch</span>
+      </a>
+
+      <a href="https://github.com/100happee" class="flex items-center space-x-2 text-gray-300 hover:underline text-lg">
+        <img src="https://images.icon-icons.com/3685/PNG/512/github_logo_icon_229278.png" alt="GitHub" class="w-6 h-6"> 
+        <span>GitHub</span>
+      </a>
     </div>
 
-    <script>
-        let points = 0;
-        let pointsPerClick = 1;
-        let pointsPerMs = 0;
-        let challengeId = 0;
-        let activeChallenges = [];
+    <!-- Dropdown -->
+    <div class="relative mt-6">
+      <button id="dropdownButton" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        More GitHub Sites ▼
+      </button>
+      <div id="dropdownMenu" class="hidden absolute z-10 mt-2 w-80 bg-[#1f1f1f] rounded shadow-lg border border-gray-700">
+        <ul class="p-4 space-y-3 text-gray-100">
+          <li class="flex items-center space-x-2">
+            <img src="https://images.icon-icons.com/3685/PNG/512/github_logo_icon_229278.png" class="w-5 h-5" />
+            <a href="https://100happee.github.io/svs2" class="hover:underline">Shooters VS. Shooters 2 (demo)</a>
+          </li>
+          <li class="flex items-center space-x-2">
+            <img src="https://images.icon-icons.com/3685/PNG/512/github_logo_icon_229278.png" class="w-5 h-5" />
+            <a href="https://100happee.github.io/svs" class="hover:underline">Shooters VS. Shooters 1</a>
+          </li>
+          <li class="flex items-center space-x-2">
+            <img src="https://images.icon-icons.com/3685/PNG/512/github_logo_icon_229278.png" class="w-5 h-5" />
+            <a href="https://100happee.github.io/breakout.github.io" class="hover:underline">Breakout</a>
+          </li>
+          <li class="flex items-center space-x-2">
+            <img src="https://images.icon-icons.com/3685/PNG/512/github_logo_icon_229278.png" class="w-5 h-5" />
+            <a href="https://100happee.github.io/happeecraft.github.io" class="hover:underline">Eaglercraft 1.8 Client</a>
+          </li>
+          <li class="flex items-center space-x-2">
+            <img src="https://images.icon-icons.com/3685/PNG/512/github_logo_icon_229278.png" class="w-5 h-5" />
+            <a href="https://100happee.github.io/hapey69.github.io" class="hover:underline">Old Homepage</a>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-        const upgrades = {
-            1: { baseCost: 10, cost: 10, multiplier: 1.5, pointsPerUpgrade: 1 },
-            2: { baseCost: 50, cost: 50, multiplier: 1.7, pointsPerUpgrade: 5 },
-            3: { baseCost: 100, cost: 100, multiplier: 2.0, pointsPerUpgrade: 0, passivePointsPerMs: 1 },
-        };
+    <!-- About Me & Profile -->
+    <div class="flex flex-col md:flex-row justify-between w-full max-w-4xl mt-10 space-y-6 md:space-y-0 md:space-x-6">
+      <!-- About Me Box -->
+      <div class="bg-[#1e1e1e] rounded-lg shadow p-6 flex-1 border border-gray-700">
+        <h2 class="text-2xl font-semibold mb-2">About Me</h2>
+        <p>
+          Hi! I'm 100happee, I love Nintendo video games, I'm a musician, and a YouTuber! 
+          Join my Discord to help me grow as a YouTuber and become a member of my YouTube channel for free!
+        </p>
+      </div>
 
-        document.getElementById("click-button").addEventListener("click", function() {
-            points += pointsPerClick;
-            updatePointsDisplay();
-            checkChallenges();
-        });
+      <!-- Profile Picture -->
+      <div class="flex justify-center items-center">
+        <img src="https://lh3.googleusercontent.com/a/ACg8ocJb-yrSq3EgOSpuLSiYn2YYz7vttfnEwlXU1w7gt2TrD6FEPsA=s288-c-no" alt="Profile Picture" class="w-48 h-48 rounded-full shadow-lg object-cover border-4 border-gray-700">
+      </div>
+    </div>
+  </div>
 
-        function updatePointsDisplay() {
-            document.getElementById("point-display").innerText = `Points: ${Math.round(points)}`;
-            document.getElementById("ppc-display").innerText = `Points Per Click (PPC): ${Math.round(pointsPerClick)}`;
-            document.getElementById("ppm-display").innerText = `Points Per Millisecond (PPM): ${Math.round(pointsPerMs)}`;
-        }
-
-        function buyUpgrade(upgradeNumber) {
-            const upgrade = upgrades[upgradeNumber];
-            if (points >= upgrade.cost) {
-                points -= upgrade.cost;
-                upgrade.cost = Math.floor(upgrade.cost * upgrade.multiplier);
-
-                if (upgradeNumber === 1 || upgradeNumber === 2) {
-                    pointsPerClick += upgrade.pointsPerUpgrade;
-                } else if (upgradeNumber === 3) {
-                    pointsPerMs += upgrade.passivePointsPerMs;
-                }
-
-                updateUpgradeDisplay(upgradeNumber);
-                updatePointsDisplay();
-            }
-        }
-
-        function updateUpgradeDisplay(upgradeNumber) {
-            const upgrade = upgrades[upgradeNumber];
-            document.getElementById(`upgrade-${upgradeNumber}-cost`).innerText = Math.round(upgrade.cost);
-        }
-
-        setInterval(() => {
-            points += pointsPerMs;
-            updatePointsDisplay();
-            checkChallenges();
-        }, 100);
-
-        function generateRandomChallenge() {
-            const challenge = document.createElement('div');
-            challenge.classList.add('challenge');
-            challenge.setAttribute('id', 'challenge-' + challengeId);
-
-            const type = Math.random();
-            let requirement = 0;
-            let reward = "";
-
-            // Ensure uniqueness of challenges by avoiding duplicates
-            let task;
-            do {
-                task = Math.floor(Math.random() * 2); // Random task generation
-            } while (activeChallenges.includes(task));
-
-            activeChallenges.push(task);
-
-            if (type < 0.5) {
-                requirement = Math.round(points * 2.5 + 100); // Longer task
-                const ppcReward = Math.max(1, Math.floor(pointsPerClick * 5)); // Lower reward
-                reward = `Reach ${requirement} points (Reward: +${ppcReward} PPC)`;
-                challenge.innerHTML = `<span>${reward}</span> <button onclick="completeChallenge(${challengeId}, 'points', ${requirement})">Claim Reward</button>`;
-            } else {
-                const upgradeNum = 3; // Only keeping Upgrade 3 challenge
-                requirement = upgrades[upgradeNum].baseCost + 5; // Longer task
-                const ppmReward = Math.max(1, Math.floor(pointsPerMs * 1.5)); // Lower reward
-                reward = `Upgrade 3 to ${requirement} times (Reward: +${ppmReward} PPM)`;
-                challenge.innerHTML = `<span>${reward}</span> <button onclick="completeChallenge(${challengeId}, 'upgrade', ${upgradeNum}, ${requirement})">Claim Reward</button>`;
-            }
-
-            document.getElementById('challenge-container').appendChild(challenge);
-            challengeId++;
-        }
-
-        function checkChallenges() {
-            if (document.getElementById('challenge-container').children.length < 3 && Math.random() < 0.01) {
-                generateRandomChallenge();
-            }
-        }
-
-        function completeChallenge(id, type, requirement, upgradeNum = null) {
-            if (type === 'points' && points >= requirement) {
-                pointsPerClick += Math.max(1, Math.floor(pointsPerClick * 5)); // Lower reward
-            } else if (type === 'upgrade' && upgradeNum === 3 && upgrades[upgradeNum].baseCost >= requirement) {
-                pointsPerMs += 1.5; // Lower reward
-            }
-
-            // Remove only the specific challenge that was completed
-            document.getElementById(`challenge-${id}`).remove();
-            activeChallenges = activeChallenges.filter(task => task !== id); // Remove from active challenges
-        }
-    </script>
+  <script>
+    const btn = document.getElementById("dropdownButton");
+    const menu = document.getElementById("dropdownMenu");
+    btn.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+    });
+  </script>
 </body>
 </html>
